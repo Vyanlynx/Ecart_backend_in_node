@@ -9,6 +9,12 @@ const User_data = [{
     UserName: "ADMIN",
     Password: "DELL_Vostro_1123"
 }]
+var data_ = [];
+// Sending User name and password to client:
+Route.get("/ADMIN", (request, response) => {
+    response.json(data_);
+})
+
 //check if the user name is valid;
 Route.get('/:name/:Password', async (request, response) => {
     //     const Check = await PostData.findOne({UserName:request.params.name});
@@ -32,6 +38,7 @@ Route.get('/:name/:Password', async (request, response) => {
     //     }
 
     // MongoDB is working slow, So storing values in server side, it's not safe but we don't have any other choices.
+    
     const Check = User_data.filter(User => User.UserName == request.params.name);
     if (Check == "") {
         return response.status(400).json("User is not found"); // check if user is already available in server
@@ -42,18 +49,19 @@ Route.get('/:name/:Password', async (request, response) => {
         {
             const user_token = Jwt.sign(request.params.name, process.env.SECRET_KEY);
             console.log(user_token);
-            return response.json({ accesstoken: user_token }).status(200);
+            return response.json({ accesstoken: user_token }).status(200).send("Logged in Successfully");
             // return response.cookie("token", user_token).status(200).json("Logged in Successfully");
             // return response.status(200).json("Logged in Successfully");
         }
         else {
-            return response.status(401).json("please check your password").send("Hi");
+            return response.status(401).json("please check your password");;
         }
     }
 });
 
 //create USER name and password
 Route.post('/', async (request, response) => {
+    data_.push([request.body.UserName,request.body.Password, request.body.email, request.body.address]);
     if (User_data.some((User) => { return User.UserName == request.body.UserName })) {
         response.json("User name has already taken");
     }
@@ -81,8 +89,8 @@ Route.post('/', async (request, response) => {
         User_data.push(data_test);
         const user_check = User_data.filter(User => User.UserName == request.body.UserName)
         if (user_check != null) {
-            // response.status(200).json("Account Created Successfully");
-            response.json(User_data)
+            response.status(200).json("Account Created Successfully");
+            // response.json(User_data)
         }
         else {
             response.status(404).json("Server busy!");
@@ -100,7 +108,7 @@ Route.post('/', async (request, response) => {
 //     res.send(del);
 // })
 Route.get('/test', Token_Verification, (req, res) => {
-    res.json(req.UserName); //Successfully able to authuorize..
+    res.json(req.UserName).send("token verification failed"); //Successfully able to authuorize..
 
 })
 function Token_Verification(req, res, next) {
@@ -109,10 +117,11 @@ function Token_Verification(req, res, next) {
     console.log(auth_Header)
     // console.log(token_data)
     Jwt.verify(auth_Header, process.env.SECRET_KEY, (err, user) => {
-        if (err) return res.json("Token verification failed")
+        if (err) return res.json("Token verification failed").status(204);
         req.UserName = user;
         next();
     })
+
 
 }
 module.exports = Route;

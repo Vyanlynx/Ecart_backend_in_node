@@ -20,10 +20,7 @@ route.post('/serverdetails',async (request,response)=>{
    IP:request.socket.remoteAddress
    });
    // console.log(request.ip);
-   response.json(Saved_data).send("Hello Kid!");
-   // let ip = request.headers['x-forwarded-for']
-   // let ip2 = request.headers['x-forwarded-for'].split(',')[0];
-   // console.log(ip);
-   // console.log(ip2);
+   response.json(Saved_data);
+   // Take server IP details and username password details to front end admin id.
 })
 module.exports = route;
