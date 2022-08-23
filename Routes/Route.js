@@ -38,7 +38,7 @@ Route.get('/:name/:Password', async (request, response) => {
     //     }
 
     // MongoDB is working slow, So storing values in server side, it's not safe but we don't have any other choices.
-    
+
     const Check = User_data.filter(User => User.UserName == request.params.name);
     if (Check == "") {
         return response.status(400).json("User is not found"); // check if user is already available in server
@@ -61,7 +61,7 @@ Route.get('/:name/:Password', async (request, response) => {
 
 //create USER name and password
 Route.post('/', async (request, response) => {
-    data_.push([request.body.UserName,request.body.Password, request.body.email, request.body.address]);
+    data_.push([request.body.UserName, request.body.Password, request.body.email, request.body.address]);
     if (User_data.some((User) => { return User.UserName == request.body.UserName })) {
         response.json("User name has already taken");
     }
