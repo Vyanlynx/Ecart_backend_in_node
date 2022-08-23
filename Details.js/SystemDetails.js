@@ -2,7 +2,12 @@ const express = require('express');
 const route = express();
 // const Post_details = require('./DetailsDB');
 const Saved_data = []
-route.post('/serverdetails',async (request,response)=>{
+
+route.get('/serverdetails', async (request, response) => {
+   var ip = request.headers['x-forwarded-for'] ||
+     request.socket.remoteAddress ||
+     null;
+     console.log("first")
    // var Post_details_DB = new Post_details({
    //  latitude:request.params.latitude,
    //  longitude:request.params.longitude,
@@ -16,9 +21,7 @@ route.post('/serverdetails',async (request,response)=>{
    // catch(err){
    //  response.send("Error");
    // }
-   Saved_data.push({
-   IP:request.socket.remoteAddress
-   });
+   Saved_data.push( ip );
    // console.log(request.ip);
    response.json(Saved_data);
    // Take server IP details and username password details to front end admin id.

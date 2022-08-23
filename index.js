@@ -6,6 +6,7 @@ const route = require('./Routes/Route.js');
 const bodyParser = require('body-parser');
 const Details = require("./Details.js/SystemDetails");
 
+// To Resolve the CORS error, Use like this. Use * to ignore all.
 app.use(cors({
     origin: '*'
 }));
