@@ -3,9 +3,6 @@ const mongoose = require('mongoose');
 //here it saves that to DB
 //  https://geolocation-db.com/json/
 const PostSchema_details = mongoose.Schema({
-    latitude:{},
-    longitude:{},
-    IP:{},
-    postal:{}
+    IP:{}
 });
 module.exports = mongoose.model('Post_details',PostSchema_details);
