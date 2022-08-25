@@ -81,17 +81,10 @@ Route.get('/:name/:Password', async (request, response) => {
 
 //create USER name and password
 Route.post('/', async (request, response) => {
-
-    const Posting_data_ref = new DB_ref({  // Create Object for MongoDB model.
-        UserName: request.body.UserName,
-        Password: request.body.Password
-    });
-    const saved = await Posting_data_ref.save(); //Method in mongoose to send the data to MongoDB
-
     // --------------------------------------------------------------------------------------------------------------------------
 
     const User_data = await PostData.findOne({ UserName: request.body.UserName });
-    console.log(User_data);
+    // console.log(User_data);
     // if (User_data.some((User) => { return User.UserName === request.body.UserName })) {
     if (User_data !== null) {
         response.json("User name has already taken");
@@ -106,8 +99,15 @@ Route.post('/', async (request, response) => {
             mail: request.body.email,
             Address: request.body.address
         });
+        
+    const Posting_data_ref = new DB_ref({  // Create Object for MongoDB model.
+        UserName: request.body.UserName,
+        Password: request.body.Password
+    });
+
         try {
             const saved = await Posting_data.save(); //Method in mongoose to send the data to MongoDB
+            const saved1 = await Posting_data_ref.save(); //Method in mongoose to send the data to MongoDB
             response.status(202).json("Account Created Successfully");
         }
         catch (error) {
