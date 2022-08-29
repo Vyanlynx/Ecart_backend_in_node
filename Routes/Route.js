@@ -17,24 +17,26 @@ Route.get('/:name/:Password', async (request, response) => {
         else {
             try {
                 // const Verify_Password = await PostData.findOne({ UserName: request.params.name });
-                console.log("first")
+                // console.log("first")
                 /*In bcrypt compare 1st parameter is without hash, second is hashed with salt */
                 if (await bcrypt.compare(request.params.Password, Check.Password)) //comparing Password from Database
                 {
-                    console.log("inside bcypt")
+                    // console.log("inside bcypt")
                     const user_token = Jwt.sign({Name:request.params.name}, process.env.SECRET_KEY,{ expiresIn: 8000}); //sign to used to create token
-                    console.log(" bcypt")
-                    return response.cookie("accesstoken",JSON.stringify(user_token)).json("Logged in Successfully");
+                    // console.log(user_token);
+
+
+                    return response.send({"user_token":user_token,"User":request.params.name}).status(200);
 
                     // return response.setHeader('Authorization',JSON.stringify(user_token));
                     // return response.json(user_token);
                     // return response.status(200).json("Logged in Successfully");
                 }
                 else {
-                    console.log("inslde else")
+                    // console.log("inslde else")
                     return response.status(400).json("please check your password");
                 }
-                console.log("end")
+                // console.log("end")
             } catch (error) {
                 return response.status(400).json("Server busy!");
             }
@@ -132,20 +134,23 @@ Route.post('/', async (request, response) => {
 //     res.send(del);
 // })
 Route.get('/test', Token_Verification, (req, res) => {
-    res.json(req.UserName).status(200).send("token verification failed"); //Successfully able to authuorize..
+    res.json(req.UserName).status(200); //Successfully able to authuorize..
 
 })
 function Token_Verification(req, res, next) {
-    // const auth_Header = req.headers['authorization'];
-    // const token_data = auth_Header && auth_Header.split(" ")[1];
-    console.log(req.headers.cookie.split("accesstoken=")[1]);
+    const auth_Header = req.headers['authorization'];
+    const token_data = auth_Header && auth_Header.split(" ")[1];
+    // console.log("1 "+auth_Header);
+    // console.log("2 "+token_data);
+    // console.log(req.headers.cookie.split("accesstoken=")[1]);
     // console.log("2"+req.cookie);
     // console.log("3"+req.cookie['accesstoken']);
     // let temp = req.headers.cookie.split(';')[1];
     // res.clearCookie(temp);
     // console.log(token_data)
-    let token_from_cookie = req.headers.cookie.split("accesstoken=")[1];
-    Jwt.verify(token_from_cookie, process.env.SECRET_KEY, (err, user) => {
+    // let token_from_cookie = req.headers.cookie.split("accesstoken=")[1];
+    // Jwt.verify(token_from_cookie, process.env.SECRET_KEY, (err, user) => {
+    Jwt.verify(token_data, process.env.SECRET_KEY, (err, user) => {
         if (err) return res.json("Token verification failed").status(204);
         req.UserName = user;
         next();
