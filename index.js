@@ -19,7 +19,9 @@ app.use(bodyParser.json());
 app.use('/login', route);
 // app.set('trust proxy', true); //To take the IP address
 app.use('/details', Details);
-
+app.use("/test", (req, res) => {
+    res.json("Connected Succesfully")
+})
 // Mongoose.connect('mongodb+srv://test_user:KL123@cluster0.hrnxcoa.mongodb.net/?retryWrites=true&w=majority',()=> console.log("Connected to DB")).catch(err=>console.log(err))
 Mongoose.connect("mongodb+srv://test_user:KL123@cluster0.hrnxcoa.mongodb.net/?retryWrites=true&w=majority", () => console.log("second connected"))
 
