@@ -22,7 +22,7 @@ Route.get('/:name/:Password', async (request, response) => {
                 if (await bcrypt.compare(request.params.Password, Check.Password)) //comparing Password from Database
                 {
                     // console.log("inside bcypt")
-                    const user_token = Jwt.sign({Name:request.params.name}, process.env.SECRET_KEY,{ expiresIn: 8000}); //sign to used to create token
+                    const user_token = Jwt.sign({Name:request.params.name}, "w3e4r5t6y7ujiko3we4drftgyhs34d5ftgyhujisedrftgyhuj3se4dr5ftgyhuji65tyghb3wedfcv8uijkmnbvcxzsertyjb",{ expiresIn: 8000}); //sign to used to create token
                     // console.log(user_token);
 
 
@@ -150,7 +150,7 @@ function Token_Verification(req, res, next) {
     // console.log(token_data)
     // let token_from_cookie = req.headers.cookie.split("accesstoken=")[1];
     // Jwt.verify(token_from_cookie, process.env.SECRET_KEY, (err, user) => {
-    Jwt.verify(token_data, process.env.SECRET_KEY, (err, user) => {
+    Jwt.verify(token_data, "w3e4r5t6y7ujiko3we4drftgyhs34d5ftgyhujisedrftgyhuj3se4dr5ftgyhuji65tyghb3wedfcv8uijkmnbvcxzsertyjb", (err, user) => {
         if (err) return res.json("Token verification failed").status(204);
         req.UserName = user;
         next();
