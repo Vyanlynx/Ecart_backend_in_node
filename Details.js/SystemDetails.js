@@ -10,7 +10,8 @@ const Post_details = require("./DetailsDB");
  // while creating Date object
 
 route.get('/store', async (request, response) => {
-  var ip = request.headers['x-forwarded-for'] || request.socket.remoteAddress || null; // contains IP details
+  try {
+    var ip = request.headers['x-forwarded-for'] || request.socket.remoteAddress || null; // contains IP details
   var device = request.headers['user-agent']; //contains browser and other details
   // console.log("Hi"+device);
   var Post_details_DB = new Post_details({
@@ -18,7 +19,12 @@ route.get('/store', async (request, response) => {
     dt: Date(),
     Device_details:device
   });
-  await Post_details_DB.save();
+    await Post_details_DB.save();
+    response.send("Session captured successfully")
+  }
+  catch(err) {
+    response.send("Error Happened in /details/store")
+  }
   // try {
   //   const saved = await Post_details_DB.save();
   //   console.log("count1")
