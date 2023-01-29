@@ -13,11 +13,9 @@ app.use(cors({
     origin: '*'
 }));
 
-
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use('/login', route);
-// app.set('trust proxy', true); //To take the IP address
 app.use('/details', Details);
 app.use("/testing", (req, res) => {
     res.json("Connected Succesfully")

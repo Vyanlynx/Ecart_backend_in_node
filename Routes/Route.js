@@ -75,6 +75,8 @@ Route.get('/:name/:Password', async (request, response) => {
 //create USER name and password
 Route.post('/', async (request, response) => {
     // --------------------------------------------------------------------------------------------------------------------------
+try {
+    
 
     const User_data = await PostData.findOne({ UserName: request.body.UserName });
     const User_mail = await PostData.findOne({ Contact: request.body.Contact });
@@ -121,6 +123,8 @@ Route.post('/', async (request, response) => {
         // else {
         //     response.status(404).json("Server busy!");
         // }
+    }} catch (error) {
+    response.send("Error happened in POST")
     }
 });
 

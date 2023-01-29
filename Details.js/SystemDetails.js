@@ -7,22 +7,22 @@ const fs = require('fs');
 // var read_file = fs.readFileSync("datas.json");
 const Post_details = require("./DetailsDB");
 // var data_details = JSON.parse(read_file);
- // while creating Date object
+// while creating Date object
 
 route.get('/store', async (request, response) => {
   try {
     var ip = request.headers['x-forwarded-for'] || request.socket.remoteAddress || null; // contains IP details
-  var device = request.headers['user-agent']; //contains browser and other details
-  // console.log("Hi"+device);
-  var Post_details_DB = new Post_details({
-    IP: ip,
-    dt: Date(),
-    Device_details:device
-  });
+    var device = request.headers['user-agent']; //contains browser and other details
+    // console.log("Hi"+device);
+    var Post_details_DB = new Post_details({
+      IP: ip,
+      dt: Date(),
+      Device_details: device
+    });
     await Post_details_DB.save();
     response.send("Session captured successfully")
   }
-  catch(err) {
+  catch (err) {
     response.send("Error Happened in /details/store")
   }
   // try {
@@ -45,9 +45,14 @@ route.get('/store', async (request, response) => {
 // response.json("Welcome");
 // Take server IP details and username password details to front end admin id.
 // })
-route.get("/showdb", async(req, res) => {
+route.get("/showdb", async (req, res) => {
   // res.json(JSON.parse(fs.readFileSync("datas.json")));
-const show_all = await Post_details.find();
-res.json(show_all);
+  try {
+    const show_all = await Post_details.find();
+    res.json(show_all);
+  } catch (error) {
+    res.send(error)
+  }
+
 })
 module.exports = route;
