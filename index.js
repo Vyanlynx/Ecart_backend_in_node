@@ -9,10 +9,10 @@ const Mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 require("dotenv").config();
 // To Resolve the CORS error, Use like this. Use * to ignore all.
-app.use(cors());
-// app.use(cors({
-//     origin: '*'
-// }));
+
+app.use(cors({
+    origin: "https://moonkartz.netlify.app/"
+}));
 
 app.use(cookieParser());
 app.use(bodyParser.json());
