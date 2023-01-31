@@ -19,7 +19,7 @@ app.use(bodyParser.json());
 app.use('/login', route);
 app.use('/details', Details);
 app.use("/testing", (req, res) => {
-    res.json("Connected Succesfully")
+    res.json({Status: "Connected Succesfully",When:Date()})
 })
 // Mongoose.connect('mongodb+srv://test_user:KL123@cluster0.hrnxcoa.mongodb.net/?retryWrites=true&w=majority',()=> console.log("Connected to DB")).catch(err=>console.log(err))
 Mongoose.connect("mongodb+srv://test_user:KL123@cluster0.hrnxcoa.mongodb.net/?retryWrites=true&w=majority", () => console.log("second connected"))
