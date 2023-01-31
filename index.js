@@ -11,7 +11,8 @@ require("dotenv").config();
 // To Resolve the CORS error, Use like this. Use * to ignore all.
 
 app.use(cors({
-    origin: "https://moonkartz.netlify.app/"
+    origin: "https://moonkartz.netlify.app/",
+    methods: ["GET", "POST", "PUT", "DELETE"]
 }));
 
 app.use(cookieParser());
@@ -19,7 +20,7 @@ app.use(bodyParser.json());
 app.use('/login', route);
 app.use('/details', Details);
 app.use("/testing", (req, res) => {
-    res.json({Status: "Connected Succesfully",When:Date()})
+    res.json({ Status: "Connected Succesfully", When: Date() })
 })
 // Mongoose.connect('mongodb+srv://test_user:KL123@cluster0.hrnxcoa.mongodb.net/?retryWrites=true&w=majority',()=> console.log("Connected to DB")).catch(err=>console.log(err))
 Mongoose.connect("mongodb+srv://test_user:KL123@cluster0.hrnxcoa.mongodb.net/?retryWrites=true&w=majority", () => console.log("second connected"))
