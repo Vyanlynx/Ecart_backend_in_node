@@ -1,4 +1,3 @@
-const { json } = require('body-parser');
 const express = require('express');
 const route = express();
 // const Post_details_json = require('../datas.json');
@@ -20,6 +19,7 @@ route.get('/store', async (request, response) => {
       Device_details: device
     });
     await Post_details_DB.save();
+
     response.send("Session captured successfully")
   }
   catch (err) {
