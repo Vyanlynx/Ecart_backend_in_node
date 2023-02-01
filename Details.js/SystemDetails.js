@@ -19,6 +19,7 @@ route.get('/store', async (request, response) => {
       Device_details: device
     });
     await Post_details_DB.save();
+    response.header("Access-control-Allow-Origin","https://moonkartz.netlify.app")
     response.send({ Status: "Session captured successfully" })
   }
   catch (err) {
