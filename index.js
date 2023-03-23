@@ -11,8 +11,7 @@ require("dotenv").config();
 // To Resolve the CORS error, Use like this. Use * to ignore all.
 
 app.use(cors({
-    origin: "https://moonkartz.netlify.app",
-    methods:["GET","POST"]
+    origin: "*"
 }));
 
 app.use(cookieParser());
