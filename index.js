@@ -23,7 +23,7 @@ app.use(function(req, res, next) {
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use('/login', route);
-app.use('/test', {test:"Success"});
+app.use('/test', "Success");
 // app.set('trust proxy', true); //To take the IP address
 app.use('/details', Details);
 
