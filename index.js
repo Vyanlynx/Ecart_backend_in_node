@@ -27,7 +27,6 @@ app.use('/test', "Success");
 // app.set('trust proxy', true); //To take the IP address
 app.use('/details', Details);
 
-// Mongoose.connect('mongodb+srv://test_user:KL123@cluster0.hrnxcoa.mongodb.net/?retryWrites=true&w=majority',()=> console.log("Connected to DB")).catch(err=>console.log(err))
 Mongoose.connect(process.env.MONGO_PROD_URI, () => console.log("second connected"))
 
 app.listen(port, (req, res) => { console.log("Server is running") });
